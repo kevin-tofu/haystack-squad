@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "haystack-squad"
+version = "0.1.0"
+description = ""
+authors = ["kohei <koheitech001@gmail.com>"]
+readme = "README.md"
+packages = [{include = "haystack_squad"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+datasets = "^2.11.0"
+farm-haystack = "^1.15.1"
+argparse = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
