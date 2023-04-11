@@ -7,7 +7,8 @@ def list2documentstore(
     elasticsearch_port: int,
     elasticsearch_user: str,
     elasticsearch_password: str,
-    elasticsearch_index: str,
+    elasticsearch_index_docs: str,
+    elasticsearch_index_labels: str,
     docs: list[Document],
     labels: list[Label]
 ):
@@ -16,15 +17,15 @@ def list2documentstore(
         port=elasticsearch_port,
         username=elasticsearch_user,
         password=elasticsearch_password,
-        index=elasticsearch_index,
+        # index=elasticsearch_index,
         # embedding_field="question_emb",
         # embedding_dim=384,
         return_embedding=True
     )
 
     # create aggregated labels
-    document_store.write_documents(docs, index="document")
-    document_store.write_labels(labels, index="label")
+    document_store.write_documents(docs, index=elasticsearch_index_docs)
+    document_store.write_labels(labels, index=elasticsearch_index_labels)
     
     return document_store
 
@@ -42,7 +43,8 @@ if __name__ == '__main__':
     parser.add_argument('--elasticsearch_user', '-EU', type=str, default='', help='')
     parser.add_argument('--elasticsearch_password', '-EPW', type=str, default='', help='')
     parser.add_argument('--elasticsearch_port', '-EP', type=int, default=9200, help='')
-    parser.add_argument('--elasticsearch_index', '-EI', type=str, default='jp', help='')
+    parser.add_argument('--elasticsearch_index_document', '-EID', type=str, default='document', help='')
+    parser.add_argument('--elasticsearch_index_label', '-EIL', type=str, default='label', help='')
     # parser.add_argument('--elasticsearch_tokenizer', '-ET', type=str, default='kuromoji_tokenizer', help='')
     # parser.add_argument('--path_export', '-PE', type=str, default='./output', help='')
     args = parser.parse_args()
@@ -56,7 +58,8 @@ if __name__ == '__main__':
         args.elasticsearch_port,
         args.elasticsearch_user,
         args.elasticsearch_password,
-        args.elasticsearch_index,
+        args.elasticsearch_index_document,
+        args.elasticsearch_index_label,
         docs,
         labels
     )
